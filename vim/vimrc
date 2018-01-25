@@ -1,0 +1,88 @@
+" シンタックスハイライトを有効化
+syntax enable
+
+" 基本設定
+set number " 行番号表示
+set nobackup
+set showmatch
+set ignorecase
+set smartcase
+set wrapscan
+set scrolloff=5
+set hlsearch
+set shiftwidth=2
+set tabstop=2
+set autoindent
+set ruler
+set smartindent
+set clipboard=unnamed,autoselect
+set completeopt=menuone
+set backspace=start,eol,indent
+
+
+" ':e <file>' で新規ファイルを開く時のカスタマイズ
+set wildmenu
+set wildignore+=*.dll,*.o,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,*.class,*/*.dSYM/*,*.dylib
+set wildmode=list:full
+
+" 行末までヤンク
+nnoremap Y y$
+
+" <C-j>で<esc>の代わり
+inoremap <C-j> <esc>
+
+" 行頭・行末への移動のマッピング
+noremap <S-h> ^
+noremap <S-l> $
+
+" ノーマルモードでもEnterで改行
+noremap <CR> i<CR><ESC>
+
+
+" python settings
+" 新規ファイル作成時に自動で書く
+autocmd BufNewFile *.py 0r $HOME/dotfiles/vim/templates/python.txt
+
+
+
+" deinの設定
+if &compatible
+	set nocompatible
+endif
+
+
+" プラグインをインストールするディレクトリ
+let s:dein_dir = expand('~/dotfiles/vim/.cache/dein')
+" dein.vim の場所
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+
+" dein.vim がなければ設定する
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:dein_repo_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+  endif
+  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
+endif
+
+call dein#begin(expand(s:dein_dir))
+call dein#add('bronson/vim-trailing-whitespace') "文末の空白文字を可視化
+call dein#end()
+filetype plugin indent on
+" インストールしてないものを自動インストール
+if dein#check_install()
+	call dein#install()
+endif
+
+" ペースト時にautoindentが働かない用にする
+if &term =~ "xterm"
+	let &t_SI .= "\e[?2004h"
+	let &t_EI .= "\e[?2004l"
+	let &pastetoggle = "\e[201~"
+
+	function XTermPasteBegin(ret)
+		set paste
+		return a:ret
+	endfunction
+
+	inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+endif
