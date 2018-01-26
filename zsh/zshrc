@@ -114,7 +114,7 @@ case ${OSTYPE} in
         alias ls='ls -G -F'
         ;;
     linux*)
-        #Linux用の設定
+				alias ls='ls --color=auto'
         ;;
 esac
 
