@@ -10,9 +10,6 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
-# プロンプトの2行表示
-PROMPT="%{${fg[red]}%}[%n@%m]%{${reset_color}%} %~
-%# "
 
 # 単語の区切り文字を指定する
 autoload -Uz select-word-style
@@ -45,12 +42,28 @@ zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats '(%s)-[%b]'
 zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
+# プロンプト表示前に呼ばれる関数
 precmd () {
     psvar=()
     LANG=en_US.UTF-8 vcs_info
     [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+		setprompt
 }
-RPROMPT="%1(v|%F{green}%1v%f|)"
+RPROMPT="%1(v|%F{013}%1v%f|)"
+
+# virtualenvでpromptを変更しない
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+# プロンプトの表示: virtualenv対応版
+function setprompt(){
+   PYTHON_VIRTUAL_ENV_STRING=""
+   if [ -n "$VIRTUAL_ENV" ]; then
+     PYTHON_VIRTUAL_ENV_STRING=":`basename \"$VIRTUAL_ENV\"`"
+   fi
+	PROMPT="%F{166}[%n@%m]%f %F{051}%~%f %F{010}${PYTHON_VIRTUAL_ENV_STRING}%f
+%# "
+}
+
 
 
 # 日本語ファイル名を表示可能にする
@@ -89,6 +102,10 @@ setopt extended_glob
 # ^R で履歴検索をするときに * でワイルドカードを使用出来るようにする
 bindkey '^R' history-incremental-pattern-search-backward
 
+
+
+
+
 ########################################
 # エイリアス
 
@@ -112,6 +129,7 @@ case ${OSTYPE} in
         #Mac用の設定
         export CLICOLOR=1
         alias ls='ls -G -F'
+				export PATH=/usr/local/bin:/usr/bin:/bin
         ;;
     linux*)
 				alias ls='ls --color=auto'
@@ -119,8 +137,6 @@ case ${OSTYPE} in
         export PYENV_ROOT=$HOME/.pyenv
         export PATH=$PYENV_ROOT/bin:$PATH
         eval "$(pyenv init -)"
+				export PATH=$PATH:/usr/local/bin:/usr/bin:/bin
         ;;
 esac
-
-# vimのpath変更
-export PATH=$PATH:/usr/local/bin:/usr/bin:/bin
