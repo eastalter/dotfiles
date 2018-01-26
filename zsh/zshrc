@@ -115,8 +115,12 @@ case ${OSTYPE} in
         ;;
     linux*)
 				alias ls='ls --color=auto'
+				# squid only
+        export PYENV_ROOT=$HOME/.pyenv
+        export PATH=$PYENV_ROOT/bin:$PATH
+        eval "$(pyenv init -)"
         ;;
 esac
 
 # vimのpath変更
-export PATH=/usr/local/bin:/usr/bin:/bin
+export PATH=$PATH:/usr/local/bin:/usr/bin:/bin
