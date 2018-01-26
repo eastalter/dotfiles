@@ -66,6 +66,12 @@ endif
 
 call dein#begin(expand(s:dein_dir))
 call dein#add('bronson/vim-trailing-whitespace') "文末の空白文字を可視化
+" 括弧挿入の強化
+" ビジュアルモードで選択したものに対して: S[記号] -> 選択範囲を記号で囲む
+" ys[範囲][記号] -> 記号で範囲を囲む: e.g. ysiw" -> カーソル上の単語を " で囲む
+" cs[記号] -> 記号を置換
+" ds[記号] -> 記号を削除
+call dein#add('tpope/vim-surround')
 call dein#end()
 filetype plugin indent on
 " インストールしてないものを自動インストール
