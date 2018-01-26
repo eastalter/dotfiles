@@ -1,9 +1,10 @@
 # dotfiles
 ## Install
+```
 cd ~/
 git clone [this repo]
 ./dotfiles/link.sh
-
+```
 
 ## zshrc
 
