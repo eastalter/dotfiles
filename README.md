@@ -2,7 +2,7 @@
 ## Install
 ```
 cd ~/
-git clone [this repo]
+git clone https://github.com/eastalter/dotfiles.git
 ./dotfiles/link.sh
 ```
 
