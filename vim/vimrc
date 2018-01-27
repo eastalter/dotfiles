@@ -38,6 +38,8 @@ noremap <S-l> $
 " ノーマルモードでもEnterで改行
 noremap <CR> i<CR><ESC>
 
+" 検索結果のハイライトをEsc連打でクリアする
+nnoremap <ESC><ESC> :nohlsearch<CR>
 
 " python settings
 " 新規ファイル作成時に自動で書く
@@ -72,6 +74,7 @@ call dein#add('bronson/vim-trailing-whitespace') "文末の空白文字を可視
 " cs[記号] -> 記号を置換
 " ds[記号] -> 記号を削除
 call dein#add('tpope/vim-surround')
+call dein#add('cocopon/iceberg.vim')
 call dein#end()
 filetype plugin indent on
 " インストールしてないものを自動インストール
@@ -92,3 +95,8 @@ if &term =~ "xterm"
 
 	inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
+
+" coloeschemeをicebegに変更
+autocmd ColorScheme * highlight Normal ctermbg=none
+autocmd ColorScheme * highlight LineNr ctermbg=none
+colorscheme iceberg

@@ -73,7 +73,6 @@ function setprompt(){
 }
 
 
-
 # 日本語ファイル名を表示可能にする
 setopt print_eight_bit
 # beep音を消す
@@ -131,6 +130,8 @@ alias sudo='sudo '
 alias -g L='| less'
 alias -g G='| grep'
 
+# git のエイリアス
+alias st='git status'
 
 case ${OSTYPE} in
     darwin*)
