@@ -109,8 +109,8 @@ setopt extended_glob
 # ^R で履歴検索をするときに * でワイルドカードを使用出来るようにする
 bindkey '^R' history-incremental-pattern-search-backward
 
-
-
+# 補完候補にも色を付ける
+# zstyle ':completion:*' list-colors di=34 ln=35 ex=31
 
 
 ########################################
@@ -139,6 +139,13 @@ case ${OSTYPE} in
         export CLICOLOR=1
         alias ls='ls -G -F'
 				export PATH=/usr/local/bin:/usr/bin:/bin
+				# sysctl
+				export PATH=$PATH:/usr/sbin/
+				# pyenv
+				export PYENV_ROOT=$HOME/.pyenv
+				export PATH="$HOME/.pyenv/bin:$PATH"
+				eval "$(pyenv init -)"
+				eval "$(pyenv virtualenv-init -)"
         ;;
     linux*)
 				alias ls='ls --color=auto'
