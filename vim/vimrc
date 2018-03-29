@@ -21,7 +21,15 @@ set backspace=start,eol,indent
 " 0から始まる数字も10進数として認識
 set nrformats=
 
-" ':e <file>' で新規ファイルを開く時のカスタマイズ
+" ステータスラインを常に表示．フォーマットはlightline.vimによる．
+set laststatus=2
+" デフォルトの--insert--的な表示を消す
+set noshowmode
+
+
+
+
+" ':e <file>' で新規ファイルを開く時のサジェストを良くする
 set wildmenu
 set wildignore+=*.dll,*.o,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,*.class,*/*.dSYM/*,*.dylib
 set wildmode=list:full
@@ -42,11 +50,28 @@ noremap <CR> i<CR><ESC>
 " 検索結果のハイライトをEsc連打でクリアする
 nnoremap <ESC><ESC> :nohlsearch<CR>
 
+" 論理行移動と表示行移動を反転
+nnoremap k gk
+nnoremap j gj
+nnoremap gk k
+nnoremap gj j
+
+" vimの複数ファイルをサクサク移動する Tip36
+nnoremap <silent> [b :bp<CR>
+nnoremap <silent> ]b :bn<CR>
+nnoremap <silent> [B :bf<CR>
+nnoremap <silent> ]B :bl<CR>
+
+
 " python settings
 " 新規ファイル作成時に自動で書く
 autocmd BufNewFile *.py 0r $HOME/dotfiles/vim/templates/python.txt
 
-
+" PrevimOpenの設定
+au BufRead,BufNewFile *.md set filetype=markdown
+let g:previm_open_cmd = 'open -a Google\ Chrome'
+" markdownの折りたたみをなくす
+let g:vim_markdown_folding_disabled=1
 
 " deinの設定
 if &compatible
@@ -80,8 +105,14 @@ call dein#add('tpope/vim-commentary')
 " {motion}にファイル全体を対象とするieとaeを追加．
 call dein#add('kana/vim-textobj-user')
 call dein#add('kana/vim-textobj-entire')
-call dein#add('kana/vim-textobj-entire')
+" colorschemeにicebergを追加
 call dein#add('cocopon/iceberg.vim')
+" ステータスライン表示
+call dein#add('itchyny/lightline.vim')
+" PrevimOpenの設定
+call dein#add('plasticboy/vim-markdown')
+call dein#add('kannokanno/previm')
+call dein#add('tyru/open-browser.vim')
 call dein#end()
 filetype plugin indent on
 " インストールしてないものを自動インストール
@@ -89,7 +120,7 @@ if dein#check_install()
 	call dein#install()
 endif
 
-" ペースト時にautoindentが働かない用にする
+" ペースト時にautoindentが働かないようにする
 if &term =~ "xterm"
 	let &t_SI .= "\e[?2004h"
 	let &t_EI .= "\e[?2004l"
@@ -103,8 +134,9 @@ if &term =~ "xterm"
 	inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
 
-" coloeschemeをicebegに変更
+" coloeschemeをicebergに変更
 autocmd ColorScheme * highlight Normal ctermbg=none
-autocmd ColorScheme * highlight LineNr ctermbg=none
 autocmd ColorScheme * highlight Nontext ctermbg=none
+autocmd ColorScheme * highlight LineNr ctermbg=none
+autocmd ColorScheme * highlight EndOfBuffer ctermbg=none
 colorscheme iceberg

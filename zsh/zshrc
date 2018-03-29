@@ -49,9 +49,9 @@ precmd () {
     [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
 		setprompt
 }
-COLOR_K="%{[38;5;013m%}"      # 色の変更
+COLOR_R="%{[38;5;219m%}"      # 色の変更
 COLOR_END="%{[0m%}"            # 色を元に戻す
-RPROMPT="%1(v|${COLOR_K}%1v${COLOR_END}|)"
+RPROMPT="%1(v|${COLOR_R}%1v${COLOR_END}|)"
 
 # virtualenvでpromptを変更しない
 export VIRTUAL_ENV_DISABLE_PROMPT=1
@@ -66,9 +66,9 @@ function setprompt(){
 	# 
 	COLOR_C="%{[38;5;166m%}"      # 色の変更
 	COLOR_Y="%{[38;5;051m%}"      # 色の変更
-	COLOR_R="%{[38;5;010m%}"      # 色の変更
+	COLOR_K="%{[38;5;040m%}"      # 色の変更
 	COLOR_END="%{[0m%}"            # 色を元に戻す
-	PROMPT="${COLOR_C}[%n@%m] ${COLOR_Y}%~ ${COLOR_R}${PYTHON_VIRTUAL_ENV_STRING}${COLOR_END}
+	PROMPT="${COLOR_C}[%n@%m] ${COLOR_Y}%~ ${COLOR_K}${PYTHON_VIRTUAL_ENV_STRING}${COLOR_END}
 % $ "
 }
 
@@ -132,6 +132,9 @@ alias -g G='| grep'
 
 # git のエイリアス
 alias st='git status'
+
+# 文字コード
+set encoding=utf-8
 
 case ${OSTYPE} in
     darwin*)
