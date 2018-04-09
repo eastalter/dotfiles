@@ -20,6 +20,8 @@ set completeopt=menuone
 set backspace=start,eol,indent
 " 0から始まる数字も10進数として認識
 set nrformats=
+" 全角文字に対応
+set ambiwidth=double
 
 " ステータスラインを常に表示．フォーマットはlightline.vimによる．
 set laststatus=2
@@ -113,6 +115,10 @@ call dein#add('itchyny/lightline.vim')
 call dein#add('plasticboy/vim-markdown')
 call dein#add('kannokanno/previm')
 call dein#add('tyru/open-browser.vim')
+" 補完の設定
+call dein#add('Shougo/neocomplete.vim')
+let g:neocomplete#enable_at_startup = 1
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 call dein#end()
 filetype plugin indent on
 " インストールしてないものを自動インストール
