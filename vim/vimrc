@@ -68,6 +68,8 @@ nnoremap <silent> ]B :bl<CR>
 " python settings
 " 新規ファイル作成時に自動で書く
 autocmd BufNewFile *.py 0r $HOME/dotfiles/vim/templates/python.txt
+" 保存時に行末のスペースを削除
+autocmd BufWritePre * :%s/\s\+$//ge
 
 " PrevimOpenの設定
 au BufRead,BufNewFile *.md set filetype=markdown
