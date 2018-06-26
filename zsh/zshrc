@@ -137,6 +137,9 @@ alias -g G='| grep'
 # git のエイリアス
 alias st='git status'
 
+# 研究室のGPU使用状況を見る
+alias gpu='ssh mideal@squid01 "bin/gpuload"'
+
 # 文字コード
 set encoding=utf-8
 
@@ -151,6 +154,8 @@ case ${OSTYPE} in
 				# pyenv
 				export PYENV_ROOT=$HOME/.pyenv
 				export PATH="$HOME/.pyenv/bin:$PATH"
+				# tex
+				export PATH=$PATH:/usr/local/texlive/2018/bin/x86_64-darwin/
 				eval "$(pyenv init -)"
 				# eval "$(pyenv virtualenv-init -)"
         ;;
